@@ -48,15 +48,7 @@ public class Patient {
     @JoinColumn(name = "state_id")
     private State state;
 
-    @Size(max = 100)
-    private String createdBy;
-
-    private LocalDateTime createdDate = LocalDateTime.now();
-
-    @Size(max = 100)
-    private String modifiedBy;
-
-    private LocalDateTime modifiedDate;
+   
 
 	public int getPatientID() {
 		return patientID;
@@ -122,37 +114,7 @@ public class Patient {
 		this.state = state;
 	}
 
-	public String getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public LocalDateTime getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(LocalDateTime createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public String getModifiedBy() {
-		return modifiedBy;
-	}
-
-	public void setModifiedBy(String modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-	public LocalDateTime getModifiedDate() {
-		return modifiedDate;
-	}
-
-	public void setModifiedDate(LocalDateTime modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
+	
 
     
     

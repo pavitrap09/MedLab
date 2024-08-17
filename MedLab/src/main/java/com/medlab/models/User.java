@@ -1,9 +1,11 @@
 package com.medlab.models;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import com.medlab.constance.Role;
 
-
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -11,114 +13,134 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-import java.time.LocalDateTime;
-
-import com.medlab.constance.Role;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String username;
+    @NotBlank 
+    @Size(max = 100)
+    private String name;
 
-    @Column(nullable = false)
+    @NotBlank
+    @Size(max = 50)
+    @Email
+    private String email;
+
+    @NotBlank
+    @Size(max = 120)
     private String password;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt = LocalDateTime.now();
-
-    @Column(name = "last_login")
-    private LocalDateTime lastLogin;
-
-    @Column(name = "is_active")
-    private boolean isActive;
-
     @Enumerated(EnumType.STRING)
-    @Column(name = "user_role", nullable = false)
-    @NotNull
-    private Role userRole;
+    @Column(length = 20)
+    private Role role;
 
-    @Size(max = 100)
-    @Column(name = "created_by")
-    private String createdBy;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RefreshToken> refreshTokens = new ArrayList<>();
 
-    @Column(name = "created_date")
-    private LocalDateTime createdDate = LocalDateTime.now();
+    public User() {
+        // Initialize the list to avoid NullPointerException
+        this.refreshTokens = new ArrayList<>();
+    }
 
-    @Size(max = 100)
-    @Column(name = "modified_by")
-    private String modifiedBy;
+    public User(String name, String email, String password, Role role) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.refreshTokens = new ArrayList<>();
+    }
 
-    @Column(name = "modified_date")
-    private LocalDateTime modifiedDate;
+    // Getters and Setters
 
-	public Long getId() {
-		return id;
-	}
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(() -> role.name());
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @Override
+    public String getUsername() {
+        return email;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public LocalDateTime getLastLogin() {
-		return lastLogin;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setLastLogin(LocalDateTime lastLogin) {
-		this.lastLogin = lastLogin;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public boolean isActive() {
-		return isActive;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public Role getUserRole() {
-		return userRole;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setUserRole(Role userRole) {
-		this.userRole = userRole;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
+    public Role getRole() {
+        return role;
+    }
 
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
+    public List<RefreshToken> getRefreshTokens() {
+        return refreshTokens;
+    }
 
-    
+    public void setRefreshTokens(List<RefreshToken> refreshTokens) {
+        this.refreshTokens = refreshTokens;
+    }
 }

@@ -51,10 +51,7 @@ public class LabAssistantsController {
         return labAssistantRepository.findById(id).map(labAssistant -> {
             labAssistant.setUserID(labAssistantDetails.getUserID());
             labAssistant.setDepartmentID(labAssistantDetails.getDepartmentID());
-            labAssistant.setCreatedBy(labAssistantDetails.getCreatedBy());
-            labAssistant.setCreatedDate(labAssistantDetails.getCreatedDate());
-            labAssistant.setModifiedBy(labAssistantDetails.getModifiedBy());
-            labAssistant.setModifiedDate(labAssistantDetails.getModifiedDate());
+           
             LabAssistant updatedLabAssistant = labAssistantRepository.save(labAssistant);
             return ResponseEntity.ok(updatedLabAssistant);
         }).orElseGet(() -> ResponseEntity.notFound().build());

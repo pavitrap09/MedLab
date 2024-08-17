@@ -23,23 +23,15 @@ public class City {
     @Size(max = 100)
     private String cityName;
 
-    @NotNull
-    private Boolean isActive = true;
 
     @ManyToOne
     @JoinColumn(name = "state_id")
     private State state; // Navigation property
 
-    @Size(max = 50)
-    private String createdBy;
+    
+    
 
-    private LocalDateTime createdDate = LocalDateTime.now();
-
-    @Size(max = 50)
-    private String modifiedBy;
-
-    private LocalDateTime modifiedDate;
-
+   
     // Getters and setters
     public Integer getCityId() {
         return cityId;
@@ -57,13 +49,9 @@ public class City {
         this.cityName = cityName;
     }
 
-    public Boolean getIsActive() {
-        return isActive;
-    }
+  
 
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
-    }
+ 
 
     public State getState() {
         return state;
@@ -73,36 +61,7 @@ public class City {
         this.state = state;
     }
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public String getModifiedBy() {
-        return modifiedBy;
-    }
-
-    public void setModifiedBy(String modifiedBy) {
-        this.modifiedBy = modifiedBy;
-    }
-
-    public LocalDateTime getModifiedDate() {
-        return modifiedDate;
-    }
-
-    public void setModifiedDate(LocalDateTime modifiedDate) {
-        this.modifiedDate = modifiedDate;
-    }
+   
+   
 }
 

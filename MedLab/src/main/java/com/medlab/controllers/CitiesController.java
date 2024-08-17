@@ -57,11 +57,7 @@ public class CitiesController {
                 return ResponseEntity.badRequest().body(null); // Handle invalid State ID
             }
 
-            existingCity.setIsActive(cityDetails.getIsActive());
-            existingCity.setCreatedBy(cityDetails.getCreatedBy());
-            existingCity.setCreatedDate(cityDetails.getCreatedDate());
-            existingCity.setModifiedBy(cityDetails.getModifiedBy());
-            existingCity.setModifiedDate(cityDetails.getModifiedDate());
+            
 
             cityRepository.save(existingCity);
             return ResponseEntity.ok(existingCity);

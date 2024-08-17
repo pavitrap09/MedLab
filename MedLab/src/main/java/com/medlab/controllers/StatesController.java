@@ -70,10 +70,6 @@ public class StatesController {
     // Helper method to update state details
     private void updateStateDetails(State state, State stateDetails) {
         state.setStateName(stateDetails.getStateName());
-        state.setActive(stateDetails.isActive());
-        state.setCreatedBy(stateDetails.getCreatedBy());
-        state.setCreatedDate(stateDetails.getCreatedDate());
-        state.setModifiedBy(stateDetails.getModifiedBy());
-        state.setModifiedDate(stateDetails.getModifiedDate());
+       
     }
 }

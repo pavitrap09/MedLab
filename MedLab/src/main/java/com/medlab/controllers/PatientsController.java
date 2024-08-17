@@ -60,9 +60,7 @@ public class PatientsController {
             updatedPatient.setAge(patientDetails.getAge());
             updatedPatient.setAddress(patientDetails.getAddress());
             updatedPatient.setState(patientDetails.getState());
-            updatedPatient.setModifiedBy(patientDetails.getModifiedBy());
-            updatedPatient.setModifiedDate(patientDetails.getModifiedDate());
-
+            
             patientRepository.save(updatedPatient);
             return ResponseEntity.ok(updatedPatient);
         } else {
